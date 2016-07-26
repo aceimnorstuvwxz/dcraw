@@ -26,7 +26,7 @@ class SaveTextPipeline(object):
     
     def process_item(self, item, spider):
         if type(item) is TextItem:
-            with  open("/Users/chenbingfeng/pyworkspace/dcraw/textout.txt", "w") as f:
+            with  open("/Users/chenbingfeng/pyworkspace/dcraw/textout.txt", "a") as f:
                 f.write(item['text']+'\n')
 
 ''' local test

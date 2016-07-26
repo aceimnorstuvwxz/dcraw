@@ -36,11 +36,10 @@ def mm5(l):
 
 class MininovaSpider(Spider):
 
-    name = 'cnjxol'
-    allowed_domains = ['cnjxol.com']
-    page_index = 0
-    page_index_max = 10000
-    start_urls = ["http://www.cnjxol.com/index.htm"]
+    name = 'nhnews'
+    allowed_domains = ['jx.zjol.com.cn']
+
+    start_urls = ["http://jx.zjol.com.cn/"]
 
 
 
@@ -57,25 +56,27 @@ class MininovaSpider(Spider):
         mm5t = mm5(response.url)
         push_url(mm5t)
 
-        linklist = response.xpath('//a[contains(@href, "jxxw")]/@href').extract()
-        linklist2 = response.xpath('//a[contains(@href, "content")]/@href').extract()
+        linklist = response.xpath('//a/@href').extract()
 
-        linklist = linklist + linklist2
 
 
         # a = ('/html/body/table[13]/tr/td[1]/table[1]/tr/td/table[3]/tr/td/table/tr/td/table[1]/tr[6]/td/span')
-        a = '//td[@class="content"]'
+        a = '//body'
 
         data = response.xpath(a)
         infos = data.xpath('string(.)').extract()
 
         content = Catch0(infos)
 
-        if content  == "null":
+        if content  == "null" or len(content) < 200:
             log.msg("NO non no conent\n", level=log.WARNING)
             pass
         else:
             item = TextItem()
+            lent = len(content)
+            content = content[int(lent*0.25) : int(lent*0.75)]
+
+
             item['text'] = content
             log.msg(content, level=log.WARNING)
 
@@ -91,10 +92,9 @@ class MininovaSpider(Spider):
                 pass
             else:
                 log.msg(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+fullurl, level=log.WARNING)
+                push_url(mm5t)
 
-                if 'xwzx' in fullurl:
-                    push_url(mm5t)
-
+                if 'cn/system' in fullurl:
                     yield scrapy.Request(fullurl)
 
         
