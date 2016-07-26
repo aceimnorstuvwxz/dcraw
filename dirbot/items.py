@@ -26,3 +26,6 @@ class CompanyItem(Item):
     category = Field()
     data_src = Field()
     '''
+
+class TextItem(Item):
+    text = Field()

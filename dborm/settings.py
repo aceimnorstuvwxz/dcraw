@@ -30,6 +30,13 @@ class CompanyInfo(Base):
     def __repr__(self):
         return "<CompanyInfo(company_id='%s', company_name='%s', company_description='%s')>" % (self.company_id, self.company_name, self.company_description)
         
+class UrlHashInfo(Base):
+    __tablename__ = "UrlHashInfo"
+    urlhash = Column(String, primary_key=True)
+
+    def __repr__(self):
+        return "<urlhash(urlhash='%s')>" % (self.urlhash)
+
 
 Session = sessionmaker(bind=engine)
 
@@ -57,4 +64,21 @@ def isexist_CompanyItem(item):
     else:
         return False
     
+def push_url(md5url):
+    if isexist_url(md5url):
+        pass
+    else:
+        com = UrlHashInfo(urlhash=md5url)
+        session = Session()
+        session.add(com)
+        session.commit()
+
+def isexist_url(md5url):
+    session = Session()
+    cnt = session.query(UrlHashInfo).filter(UrlHashInfo.urlhash == md5url).count()
+    session.commit()
+    if cnt > 0:
+        return True
+    else:
+        return False
     

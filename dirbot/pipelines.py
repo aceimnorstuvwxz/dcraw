@@ -4,9 +4,8 @@ from dborm.settings import push_CompanyItem
 from dborm.settings import isexist_CompanyItem
 
 
-
+'''
 class DBStorePipeline(object):
-    ''' item persistence '''
      
     def process_item(self, item, spider):
         if type(item) is CompanyItem:
@@ -21,7 +20,14 @@ class RemoveDuplicatePipeline(object):
                 raise DropItem("Duplicate company name: %s" % item['name'])
             else:
                 return item
-                
+'''
+
+class SaveTextPipeline(object):
+    
+    def process_item(self, item, spider):
+        if type(item) is TextItem:
+            with  open("/Users/chenbingfeng/pyworkspace/dcraw/textout.txt", "w") as f:
+                f.write(item['text']+'\n')
 
 ''' local test
 class FilterWordsPipeline(object):
