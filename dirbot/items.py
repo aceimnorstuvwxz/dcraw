@@ -29,3 +29,7 @@ class CompanyItem(Item):
 
 class TextItem(Item):
     text = Field()
+
+class Text2Item(Item):
+    text = Field()
+

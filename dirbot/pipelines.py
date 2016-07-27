@@ -29,6 +29,12 @@ class SaveTextPipeline(object):
             with  open("/Users/chenbingfeng/pyworkspace/dcraw/textout.txt", "a") as f:
                 f.write(item['text']+'\n')
 
+        if type(item) is Text2Item:
+            with  open("/Users/chenbingfeng/pyworkspace/dcraw/text2out.txt", "a") as f:
+                f.write(item['text']+'\n')
+
+
+
 ''' local test
 class FilterWordsPipeline(object):
     """A pipeline for filtering out items which contain certain words in their
